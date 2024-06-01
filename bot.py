@@ -19,7 +19,7 @@ class Bot:
         self.setup()
         # self.search()
         self.is_game_active = True
-        threading.Timer(60 * 10, game_service.type_gg, [self]).start()
+        # self.gg()
         self.game_loop()
         
 
@@ -27,6 +27,9 @@ class Bot:
         # setup_service.show_windows_locations()
         self.regions = setup_service.get_regions()
         setup_service.set_initial_states(self.regions, self.clients)
+
+    def gg(self):
+        threading.Timer(60 * 10, game_service.type_gg, [self]).start()
 
     def search(self):
         lobby_service.search_games(self.regions)
