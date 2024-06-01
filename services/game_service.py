@@ -38,7 +38,7 @@ def pick_hero(client):
             p.leftClick()
             p.sleep(1)
         else:
-            p.move(-30, -315)
+            p.move(-60, -315)
             p.sleep(0.1)
             p.leftClick()
             p.sleep(0.1)
