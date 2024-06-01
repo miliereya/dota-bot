@@ -30,7 +30,7 @@ def set_initial_states(regions: list, clients):
     for region in regions:
         class CLIENT:
             state = STATE.DETECTING_SIDE_AND_PICKING_HERO
-            side = 'NONE'
+            side = 'dire' if i < 5 else 'radiant' 
             num = i
         clients.append(CLIENT())
         i+=1
