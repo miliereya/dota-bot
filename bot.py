@@ -43,7 +43,6 @@ class Bot:
         for client in self.clients:
             self.reset_window()
             state = client.state
-            p.moveTo(self.regions[i])
             try:
                 match state:
                     case STATE.DETECTING_SIDE_AND_PICKING_HERO:
