@@ -38,7 +38,7 @@ class Bot:
         p.hotkey('ctrl', 'escape')
         p.moveTo(0, self.screenHeight / 2)
         p.leftClick()
-        p.sleep(2)
+        p.sleep(4)
     
     def game_loop(self):
         print('looped')
