@@ -17,7 +17,7 @@ def search_games(regions: list):
             founded_games = list(p.locateAllOnScreen('images/lobby/accept.png', confidence = 0.87)).__len__()
             print(founded_games)
             if(founded_games == 5):
-                p.sleep(3)
+                p.sleep(1.5)
                 
                 if(list(p.locateAllOnScreen('images/lobby/accept.png', confidence = 0.87)).__len__() == 5):
                     queue_again(regions[0])
@@ -76,7 +76,7 @@ def start_game(region):
     
 def queue_again(region):
     try:
-        queue_again= p.locateCenterOnScreen('images/lobby/queue.png', confidence =  0.87, region=region)
+        queue_again = p.locateCenterOnScreen('images/lobby/queue.png', confidence =  0.87, region=region)
         p.moveTo(queue_again)
         p.sleep(0.2)
         p.leftClick()
@@ -145,6 +145,6 @@ def get_id(region):
         p.move(25, 0)
         p.leftClick() 
         
-        p.sleep(5)
+        p.sleep(0.5)
     except:
         pass
