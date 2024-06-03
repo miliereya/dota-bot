@@ -62,9 +62,16 @@ class Bot:
                         except:
                             pass
                         
+                        
                     case STATE.PLAYING:
                         try:
                             game_service.run_mid(self.regions[i], client)
+                        except:
+                            pass
+                        
+                    case STATE.START_BUY:
+                        try:
+                            game_service.start_buy(self.regions[i], client)
                         except:
                             pass
                 i+=1

@@ -55,11 +55,14 @@ def make_parties(regions):
     invite_to_party(regions[5], regions[9])
 
     for region in regions:
-        accept_invite = p.locateCenterOnScreen('images/lobby/accept-invite.png', confidence =  0.87, region=region)
-        p.moveTo(accept_invite)
-        p.sleep(0.3)
-        p.leftClick()
-        p.sleep(0.3)
+        try:
+            accept_invite = p.locateCenterOnScreen('images/lobby/accept-invite.png', confidence =  0.87, region=region)
+            p.moveTo(accept_invite)
+            p.sleep(0.3)
+            p.leftClick()
+            p.sleep(0.3)
+        except:
+            pass
 
 def start_game(region):
     try:

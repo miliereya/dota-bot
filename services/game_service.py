@@ -25,7 +25,8 @@ def detect_side(region, client, heroes: list):
             client.side = 'dire'
             
             pick_hero(client, region, heroes)
-            client.state = STATE.SPAWN
+            client.state = STATE.PLAYING
+            # Timer(70, set_start_buying, [client]).start()
             return
     except:
         pass
@@ -50,7 +51,36 @@ def pick_hero(client, region, heroes: list):
                 pass
     except:
         pick_hero(client, region, heroes)
-    
+
+def start_buy(region, client):
+    try:
+        inventory = p.locateCenterOnScreen('images/game/inventory.png', confidence = 0.87, region=region)
+        p.moveTo(inventory)
+        p.leftClick()
+        p.press('f4')
+        p.sleep(0.5)
+        shop_search = p.locateCenterOnScreen('images/game/shop-search.png', confidence = 0.87, region=region)
+        p.moveTo(shop_search)
+        p.leftClick()
+        p.press('m')
+        p.press('a')
+        p.press('e')
+        p.press('l')
+        p.press('s')
+        p.press('t')
+        p.press('r')
+        p.press('o')
+        p.press('m')
+        p.keyDown('shift')
+        p.keyDown('ctrl')
+        p.move(0, 20)
+        p.leftClick()
+        client.state = STATE.PLAYING
+        p.keyUp('shift')
+        p.keyUp('ctrl')
+    except:
+        pass
+
 def run_mid(region, client):
     try:
         inventory = p.locateCenterOnScreen('images/game/inventory.png', confidence = 0.87, region=region)
@@ -73,6 +103,9 @@ def run_mid(region, client):
 
 def set_playing(client):
     client.state = STATE.PLAYING
+    
+def set_start_buying(client):
+    client.state = STATE.START_BUY
     
 def type_gg(bot):
     bot.is_game_active = False
