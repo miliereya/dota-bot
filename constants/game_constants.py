@@ -1,0 +1,1 @@
+heroes = ['aa', 'alch', 'axe', 'bara', 'brist', 'cent', 'chaos', 'crystal', 'db', 'disruptor', 'dk', 'doom', 'dp', 'elder', 'es', 'huskar', 'kunka', 'legion', 'lifestealer', 'mars', 'ns', 'ogre', 'omni', 'primal', 'pudge', 'shaker', 'slardar', 'sven', 'tide', 'timber', 'tiny', 'treant', 'tusk', 'underlord', 'undying', 'wk',]

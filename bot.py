@@ -1,8 +1,9 @@
 import pyautogui as p
-from constants.state_constants import STATE
 import services.setup_service as setup_service
 import services.lobby_service as lobby_service
 import services.game_service as game_service
+from constants.state_constants import STATE
+from constants.game_constants import heroes
 
 import threading
 
@@ -15,9 +16,8 @@ class Bot:
     screenHeight = p.size().height
     
     def __init__(self):
-        p.sleep(2)
         self.setup()
-        # self.search()
+        self.search()
         self.is_game_active = True
         # self.gg()
         self.game_loop()
@@ -31,8 +31,17 @@ class Bot:
     def gg(self):
         threading.Timer(60 * 10, game_service.type_gg, [self]).start()
 
+    def set_clients_state(self, state: STATE):
+        for client in self.clients:
+            client.state = state
+
     def search(self):
         lobby_service.search_games(self.regions)
+        self.set_clients_state(STATE.DETECTING_SIDE_AND_PICKING_HERO)
+        self.reset_heroes()
+    
+    def reset_heroes(self):
+        self.heroes = heroes.copy()
     
     def reset_window(self):
         p.hotkey('ctrl', 'escape')
@@ -50,7 +59,7 @@ class Bot:
                 match state:
                     case STATE.DETECTING_SIDE_AND_PICKING_HERO:
                         try:
-                            game_service.detect_side(self.regions[i], client)
+                            game_service.detect_side(self.regions[i], client, self.heroes)
                         except:
                             pass
                         

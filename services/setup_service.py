@@ -29,7 +29,7 @@ def set_initial_states(regions: list, clients):
     i = 0
     for region in regions:
         class CLIENT:
-            state = STATE.PLAYING
+            state = STATE.MAIN_MENU
             side = 'dire' if i < 5 else 'radiant' 
             num = i
         clients.append(CLIENT())

@@ -2,14 +2,16 @@ import pyautogui as p
 from constants.state_constants import STATE
 from threading import Timer
 
-def detect_side(region, client):
+def detect_side(region, client, heroes: list):
     try:
         radiant = p.locateCenterOnScreen('images/game/detect-radiant.png', confidence = 0.87, region=region)
         if(radiant):
             print('radiant found')
+            
             p.moveTo(radiant)
             client.side = 'radiant'
-            pick_hero(client)
+            
+            pick_hero(client, region, heroes)
             client.state = STATE.SPAWN
             return
     except:
@@ -18,36 +20,36 @@ def detect_side(region, client):
         dire = p.locateCenterOnScreen('images/game/detect-dire.png', confidence = 0.87, region=region)
         if(dire):
             print('dire found')
+            
             p.moveTo(dire)
             client.side = 'dire'
-            pick_hero(client)
+            
+            pick_hero(client, region, heroes)
             client.state = STATE.SPAWN
             return
     except:
         pass
 
-def pick_hero(client):
+def pick_hero(client, region, heroes: list):
+    hero = heroes.pop(0)
+    print(hero)
     try:
-        print('picking hero')
-        if(client.side == 'radiant'):
-            p.move(10, -335)
-            p.sleep(0.1)
+        hero_icon = p.locateCenterOnScreen('images/heroes/'+ hero + '.png', confidence = 0.87, region=region)
+        if(hero_icon):
+            p.moveTo(hero_icon)
+            p.sleep(0.2)
             p.leftClick()
-            p.sleep(0.1)
-            p.move(400, 265)
-            p.leftClick()
-            p.sleep(1)
-        else:
-            p.move(-60, -315)
-            p.sleep(0.1)
-            p.leftClick()
-            p.sleep(0.1)
-            p.move(400, 265)
-            p.leftClick()
-            p.sleep(1)
-        print('hero picked')
+            
+            try:
+                lock_in = p.locateCenterOnScreen('images/game/lock-in.png', confidence = 0.87, region=region)
+                if(lock_in):
+                    p.moveTo(lock_in)
+                    p.sleep(0.2)
+                    p.leftClick()
+            except:
+                pass
     except:
-        pass
+        pick_hero(client, region, heroes)
     
 def run_mid(region, client):
     try:
