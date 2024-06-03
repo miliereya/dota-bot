@@ -24,7 +24,6 @@ class Bot:
         
 
     def setup(self):
-        # setup_service.show_windows_locations()
         self.regions = setup_service.get_regions()
         setup_service.set_initial_states(self.regions, self.clients)
 
