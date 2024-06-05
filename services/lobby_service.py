@@ -1,7 +1,7 @@
 import pyautogui as p
 
 def search_games(regions: list):
-    make_parties(regions)
+    # make_parties(regions)
     
     p.sleep(2)
     print("Starting search")
@@ -42,6 +42,7 @@ def search_games(regions: list):
             pass
         
     print('Games accepted')
+    print('Waiting for players to load')
     while True:
         try:
             p.sleep(1)
@@ -52,6 +53,7 @@ def search_games(regions: list):
                 break
         except:
             pass
+    print('All players are loaded')
 
 def make_parties(regions):
     invite_to_party(regions[0], regions[1])
@@ -81,6 +83,14 @@ def start_game(region):
         p.leftClick()
         p.sleep(0.5)
         p.leftClick()
+        p.sleep(0.8)
+        try:
+            continue_button = p.locateCenterOnScreen('images/lobby/continue.png', confidence = 0.87, region=region)
+            if(continue_button):
+                p.moveTo(continue_button)
+                p.leftClick()
+        except:
+            pass
     except:
         pass
     
