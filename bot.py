@@ -21,6 +21,7 @@ class Bot:
         self.search()
         self.is_game_active = True
         # self.gg()
+        print('Running game loop')
         self.game_loop()
         
 
@@ -51,16 +52,16 @@ class Bot:
         p.sleep(4)
     
     def game_loop(self):
-        print('looped')
         i = 0
         for client in self.clients:
             self.reset_window()
             state = client.state
+            print('Player ' + (i+1) + ' state is: ' + state)
             try:
                 match state:
                     case STATE.DETECTING_SIDE_AND_PICKING_HERO:
                         try:
-                            game_service.detect_side(self.regions[i], client, self.heroes)
+                            game_service.detect_side(self.regions[i], client, self.heroes, i)
                         except:
                             pass
                         
@@ -79,6 +80,9 @@ class Bot:
                 i+=1
             except:
                 pass
+            
+        print('Game loop done')
+        
         if self.is_game_active:
             threading.Timer(2, self.game_loop).start()
                 

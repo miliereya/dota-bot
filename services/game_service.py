@@ -2,38 +2,41 @@ import pyautogui as p
 from constants.state_constants import STATE
 from threading import Timer
 
-def detect_side(region, client, heroes: list):
+def detect_side(region, client, heroes: list, i: int):
     try:
         radiant = p.locateCenterOnScreen('images/game/detect-radiant.png', confidence = 0.87, region=region)
         if(radiant):
-            print('radiant found')
+            print('Player ' + i+1 + ' side: Radiant')
             
             p.moveTo(radiant)
             client.side = 'radiant'
             
-            pick_hero(client, region, heroes)
-            client.state = STATE.SPAWN
+            pick_hero(client, region, heroes, i)
+            client.state = STATE.PLAYING
             return
     except:
         pass
     try:
         dire = p.locateCenterOnScreen('images/game/detect-dire.png', confidence = 0.87, region=region)
         if(dire):
-            print('dire found')
+            print('Player ' + i+1 + ' side: Dire')
             
             p.moveTo(dire)
             client.side = 'dire'
             
-            pick_hero(client, region, heroes)
+            pick_hero(client, region, heroes, i)
             client.state = STATE.PLAYING
             # Timer(70, set_start_buying, [client]).start()
             return
     except:
         pass
 
-def pick_hero(client, region, heroes: list):
+def pick_hero(client, region, heroes: list, i: int):
+    if(heroes.__len__() == 0):
+        print('No heroes left. Pick by yourself please')
+        return
     hero = heroes.pop(0)
-    print(hero)
+    
     try:
         hero_icon = p.locateCenterOnScreen('images/heroes/'+ hero + '.png', confidence = 0.87, region=region)
         if(hero_icon):
@@ -47,10 +50,11 @@ def pick_hero(client, region, heroes: list):
                     p.moveTo(lock_in)
                     p.sleep(0.2)
                     p.leftClick()
+                    print('Player ' + i+1 + ' hero: ' + hero)
             except:
                 pass
     except:
-        pick_hero(client, region, heroes)
+        pick_hero(client, region, heroes, i)
 
 def start_buy(region, client):
     try:
@@ -81,7 +85,7 @@ def start_buy(region, client):
     except:
         pass
 
-def run_mid(region, client):
+def run_mid(region, client, i: int):
     try:
         inventory = p.locateCenterOnScreen('images/game/inventory.png', confidence = 0.87, region=region)
         p.moveTo(inventory)
@@ -90,12 +94,14 @@ def run_mid(region, client):
             p.move(182, -45)
             p.press('a')
             p.leftClick()
+            print('Player ' + i+1 + ' is attacking Dire Throne')
             client.state = STATE.WAITING
             Timer(10, set_playing, [client]).start()
         if(client.side == 'dire'):
             p.move(112, 17)
             p.press('a')
             p.leftClick()
+            print('Player ' + i+1 + ' is attacking Radiant Throne')
             client.state = STATE.WAITING
             Timer(10, set_playing, [client]).start()
     except:

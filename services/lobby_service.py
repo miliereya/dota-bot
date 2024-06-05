@@ -18,13 +18,22 @@ def search_games(regions: list, should_make_party: bool = False):
             founded_games = list(p.locateAllOnScreen('images/lobby/accept.png', confidence = 0.87)).__len__()
 
             if(founded_games == 5):
+                print('5 player found the game')
+                print('Waiting for another 5 players')
+                
                 p.sleep(1.5)
                 
                 if(list(p.locateAllOnScreen('images/lobby/accept.png', confidence = 0.87)).__len__() == 5):
+                    print("Another 5 players didn't find the game")
+                    
                     queue_again(regions[0])
                     queue_again(regions[5])
                     
+                    print("Searching again")
+
+                    
             if(founded_games == 10):
+                print("Game is found")
                 break
         except:
             pass
@@ -57,16 +66,24 @@ def search_games(regions: list, should_make_party: bool = False):
     print('All players are loaded')
 
 def make_parties(regions):
+    print('Making parties')
+
+    print('Inviting players for stack 1')
+    
     invite_to_party(regions[0], regions[1])
     invite_to_party(regions[0], regions[2])
     invite_to_party(regions[0], regions[3])
     invite_to_party(regions[0], regions[4])
+
+    print('Inviting players for stack 2')
 
     invite_to_party(regions[5], regions[6])
     invite_to_party(regions[5], regions[7])
     invite_to_party(regions[5], regions[8])
     invite_to_party(regions[5], regions[9])
 
+    print('Accepting invitations')
+    
     for region in regions:
         try:
             accept_invite = p.locateCenterOnScreen('images/lobby/accept-invite.png', confidence =  0.87, region=region)
@@ -94,7 +111,7 @@ def start_game(region):
             pass
     except:
         pass
-    
+        
 def queue_again(region):
     try:
         queue_again = p.locateCenterOnScreen('images/lobby/queue.png', confidence =  0.87, region=region)
@@ -106,7 +123,10 @@ def queue_again(region):
         pass
     
 def invite_to_party(leader, player):
+    print('Copying id')
     get_id(player)
+
+    print('Inviting player')
     try:
         add_party = p.locateCenterOnScreen('images/lobby/add-party.png', confidence =  0.87, region=leader)
         p.moveTo(add_party)
@@ -144,6 +164,7 @@ def invite_to_party(leader, player):
         
     except:
         pass
+    print('Player invited')
     
     
 def get_id(region):

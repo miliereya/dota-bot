@@ -1,7 +1,7 @@
 class STATE:
-    MAIN_MENU = 'MAIN_MENU'
-    SEARCHING_GAME = 'SEARCHING_GAME'
-    DETECTING_SIDE_AND_PICKING_HERO = 'DETECTING_SIDE_AND_PICKING_HERO'
-    PLAYING = 'PLAYING'
-    START_BUY = 'START_BUY'
-    WAITING = 'WAITING'
+    MAIN_MENU = 'main menu'
+    SEARCHING_GAME = 'searching game'
+    DETECTING_SIDE_AND_PICKING_HERO = 'detecting side and picking here'
+    PLAYING = 'playing'
+    START_BUY = 'start buy'
+    WAITING = 'waiting'
