@@ -18,7 +18,8 @@ class Bot:
     
     def __init__(self):
         self.setup()
-        self.search()
+        if not ('-radiant' in sys.argv or '-dire' in sys.argv):
+            self.search()
         self.is_game_active = True
         # self.gg()
         print('Running game loop')
@@ -26,8 +27,18 @@ class Bot:
         
 
     def setup(self):
+        print('Starting Dota 100 hour bot...')
         self.regions = setup_service.get_regions()
-        setup_service.set_initial_states(self.regions, self.clients)
+        
+        side = 'NONE'
+        
+        if '-radiant' in sys.argv:
+            side = 'radiant'
+        
+        if '-dire' in sys.argv:
+            side = 'dire'
+        
+        setup_service.set_initial_states(self.regions, self.clients, side)
 
     def gg(self):
         threading.Timer(60 * 10, game_service.type_gg, [self]).start()
@@ -56,7 +67,7 @@ class Bot:
         for client in self.clients:
             self.reset_window()
             state = client.state
-            print('Player ' + (i+1) + ' state is: ' + state)
+            print('Player ' + str(i+1) + ' state: ' + state)
             try:
                 match state:
                     case STATE.DETECTING_SIDE_AND_PICKING_HERO:
@@ -68,7 +79,13 @@ class Bot:
                         
                     case STATE.PLAYING:
                         try:
-                            game_service.run_mid(self.regions[i], client)
+                            game_service.run_mid(self.regions[i], client, i)
+                        except:
+                            pass
+                        
+                    case STATE.DID_NOT_RUN_MID:
+                        try:
+                            game_service.run_mid(self.regions[i], client, i)
                         except:
                             pass
                         

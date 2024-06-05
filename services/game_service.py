@@ -6,7 +6,7 @@ def detect_side(region, client, heroes: list, i: int):
     try:
         radiant = p.locateCenterOnScreen('images/game/detect-radiant.png', confidence = 0.87, region=region)
         if(radiant):
-            print('Player ' + i+1 + ' side: Radiant')
+            print('Player ' + str(i+1) + ' side: Radiant')
             
             p.moveTo(radiant)
             client.side = 'radiant'
@@ -19,7 +19,7 @@ def detect_side(region, client, heroes: list, i: int):
     try:
         dire = p.locateCenterOnScreen('images/game/detect-dire.png', confidence = 0.87, region=region)
         if(dire):
-            print('Player ' + i+1 + ' side: Dire')
+            print('Player ' + str(i+1) + ' side: Dire')
             
             p.moveTo(dire)
             client.side = 'dire'
@@ -50,7 +50,7 @@ def pick_hero(client, region, heroes: list, i: int):
                     p.moveTo(lock_in)
                     p.sleep(0.2)
                     p.leftClick()
-                    print('Player ' + i+1 + ' hero: ' + hero)
+                    print('Player ' + str(i+1) + ' hero: ' + hero)
             except:
                 pass
     except:
@@ -94,17 +94,19 @@ def run_mid(region, client, i: int):
             p.move(182, -45)
             p.press('a')
             p.leftClick()
-            print('Player ' + i+1 + ' is attacking Dire Throne')
+            print('Player ' + str(i+1) + ' is attacking Dire Throne')
             client.state = STATE.WAITING
             Timer(10, set_playing, [client]).start()
         if(client.side == 'dire'):
             p.move(112, 17)
             p.press('a')
             p.leftClick()
-            print('Player ' + i+1 + ' is attacking Radiant Throne')
+            print('Player ' + str(i+1) + ' is attacking Radiant Throne')
             client.state = STATE.WAITING
             Timer(10, set_playing, [client]).start()
     except:
+        print('Player ' + str(i+1) + ' attacking failed')
+        client.state = STATE.DID_NOT_RUN_MID
         pass
 
 def set_playing(client):

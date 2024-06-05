@@ -5,3 +5,4 @@ class STATE:
     PLAYING = 'playing'
     START_BUY = 'start buy'
     WAITING = 'waiting'
+    DID_NOT_RUN_MID = "didn't run mid"
