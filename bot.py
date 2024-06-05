@@ -1,3 +1,4 @@
+import sys
 import pyautogui as p
 import services.setup_service as setup_service
 import services.lobby_service as lobby_service
@@ -35,7 +36,8 @@ class Bot:
             client.state = state
 
     def search(self):
-        lobby_service.search_games(self.regions)
+        should_make_party = True if '-party' in sys.argv else False
+        lobby_service.search_games(self.regions, should_make_party)
         self.set_clients_state(STATE.DETECTING_SIDE_AND_PICKING_HERO)
         self.reset_heroes()
     

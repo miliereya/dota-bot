@@ -1,7 +1,8 @@
 import pyautogui as p
 
-def search_games(regions: list):
-    # make_parties(regions)
+def search_games(regions: list, should_make_party: bool = False):
+    if should_make_party:
+        make_parties(regions)
     
     p.sleep(2)
     print("Starting search")
