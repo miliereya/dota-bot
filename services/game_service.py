@@ -53,8 +53,10 @@ def pick_hero(client, region, heroes: list, i: int):
                     p.leftClick()
                     print('Player ' + str(i+1) + ' hero: ' + hero)
             except:
+                print('Player ' + str(i+1) + ' failed to pick ' + hero)
                 pass
     except:
+        print('Hero "' + hero + '" is banned')
         pick_hero(client, region, heroes, i)
 
 def start_buy(region, client):

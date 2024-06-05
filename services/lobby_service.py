@@ -83,8 +83,7 @@ def accept_rewards(regions):
             pass
 
 def skip_rewards(regions: list):
-    accept_rewards(regions)
-    p.sleep(1)
+    print('Accepting rewards')
     
     accept_rewards(regions)
     p.sleep(1)
@@ -94,6 +93,11 @@ def skip_rewards(regions: list):
     
     accept_rewards(regions)
     p.sleep(1)
+    
+    accept_rewards(regions)
+    p.sleep(1)
+    
+    print('Rewards Accepted')
     
 
 def make_parties(regions):
