@@ -19,7 +19,8 @@ class Bot:
     def __init__(self):
         self.setup()
         if not ('-radiant' in sys.argv or '-dire' in sys.argv):
-            self.search()
+            should_make_party = True if '-party' in sys.argv else False
+            self.search(should_make_party)
         self.is_game_active = True
         # self.gg()
         print('Running game loop')
@@ -47,14 +48,26 @@ class Bot:
         for client in self.clients:
             client.state = state
 
-    def search(self):
-        should_make_party = True if '-party' in sys.argv else False
+    def search(self, should_make_party = False):
         lobby_service.search_games(self.regions, should_make_party)
         self.set_clients_state(STATE.DETECTING_SIDE_AND_PICKING_HERO)
         self.reset_heroes()
+        
     
     def reset_heroes(self):
         self.heroes = heroes.copy()
+    
+    def game_end_detector(self):
+        afk_count = 0
+        for client in self.clients:
+            if client.state == STATE.DID_NOT_RUN_MID:
+                afk_count+=1
+        if(afk_count == 10):
+            self.is_game_active = False
+            p.sleep(30)
+            lobby_service.skip_rewards(self.regions)
+            self.search()
+            self.game_loop()
     
     def reset_window(self):
         p.hotkey('ctrl', 'escape')
@@ -64,6 +77,7 @@ class Bot:
     
     def game_loop(self):
         i = 0
+        self.game_end_detector()
         for client in self.clients:
             self.reset_window()
             state = client.state

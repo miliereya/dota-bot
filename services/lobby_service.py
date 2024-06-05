@@ -65,6 +65,37 @@ def search_games(regions: list, should_make_party: bool = False):
             pass
     print('All players are loaded')
 
+def accept_rewards(regions):
+    for region in regions:
+        try:
+            reward = p.locateCenterOnScreen('images/lobby/accept-reward.png', confidence =  0.87, region=region)
+            p.moveTo(reward)
+            p.leftClick()
+            p.sleep(0.3)
+        except:
+            pass
+        try:
+            ok = p.locateCenterOnScreen('images/lobby/ok.png', confidence =  0.87, region=region)
+            p.moveTo(ok)
+            p.leftClick()
+            p.sleep(0.3)
+        except:
+            pass
+
+def skip_rewards(regions: list):
+    accept_rewards(regions)
+    p.sleep(1)
+    
+    accept_rewards(regions)
+    p.sleep(1)
+    
+    accept_rewards(regions)
+    p.sleep(1)
+    
+    accept_rewards(regions)
+    p.sleep(1)
+    
+
 def make_parties(regions):
     print('Making parties')
 
@@ -169,7 +200,6 @@ def invite_to_party(leader, player):
     
 def get_id(region):
     try:
-        print(region)
         rank= p.locateCenterOnScreen('images/lobby/rank.png', confidence =  0.87, region=region)
         p.moveTo(rank)
         p.move(-100, 0)

@@ -12,7 +12,8 @@ def detect_side(region, client, heroes: list, i: int):
             client.side = 'radiant'
             
             pick_hero(client, region, heroes, i)
-            client.state = STATE.PLAYING
+            client.state = STATE.WAITING
+            Timer(80, set_playing, [client]).start()
             return
     except:
         pass
@@ -25,8 +26,8 @@ def detect_side(region, client, heroes: list, i: int):
             client.side = 'dire'
             
             pick_hero(client, region, heroes, i)
-            client.state = STATE.PLAYING
-            # Timer(70, set_start_buying, [client]).start()
+            client.state = STATE.WAITING
+            Timer(80, set_playing, [client]).start()
             return
     except:
         pass
