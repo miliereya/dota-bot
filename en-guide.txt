@@ -1,0 +1,22 @@
+# Installation:
+1. Download and setup Python from Microsoft Store (v 3.10)
+2. Open Command Port
+3. Copy and past "pip install pyautogui" and press Enter
+
+
+# Launch:
+1. In file explorer find bot root folder (you will see file bot.py)
+2. Right click bellow the files -> Open Command Port
+3. Launch the bot with command "python bot.py"
+
+
+# Flags (separate with spaces "python bot.py -flag1 -flag2")
+
+-party
+(making 5v5 parties)
+
+-radiant
+(use when game is already running and players 1-5 are radiant)
+
+-dire
+(use when game is already running and players 1-5 are dire)
