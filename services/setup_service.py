@@ -30,7 +30,7 @@ def set_initial_states(regions: list, clients):
     for region in regions:
         class CLIENT:
             state = STATE.MAIN_MENU
-            side = 'NONE' 
+            side = 'NONE'
             num = i
         clients.append(CLIENT())
         i+=1

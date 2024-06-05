@@ -2,20 +2,20 @@ import pyautogui as p
 
 def search_games(regions: list):
     make_parties(regions)
-
+    
     p.sleep(2)
     print("Starting search")
-    
+
     start_game(regions[0])
     start_game(regions[5])
-    
+
     print("Waiting for games")
-    
+
     while True:
         try:
             p.sleep(1)
             founded_games = list(p.locateAllOnScreen('images/lobby/accept.png', confidence = 0.87)).__len__()
-            print(founded_games)
+
             if(founded_games == 5):
                 p.sleep(1.5)
                 
@@ -42,6 +42,16 @@ def search_games(regions: list):
             pass
         
     print('Games accepted')
+    while True:
+        try:
+            p.sleep(1)
+            radiant_count = list(p.locateAllOnScreen('images/game/detect-radiant.png', confidence = 0.87)).__len__()
+            dire_count = list(p.locateAllOnScreen('images/game/detect-dire.png', confidence = 0.87)).__len__()
+
+            if(radiant_count == 5 and dire_count == 5):
+                break
+        except:
+            pass
 
 def make_parties(regions):
     invite_to_party(regions[0], regions[1])
